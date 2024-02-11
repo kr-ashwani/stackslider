@@ -1,0 +1,38 @@
+.__parent-slider {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+.__parent-slider > .__main-slider {
+  transition: transform calc(var(--SLIDING_TIME) * 1ms)
+    cubic-bezier(0.94, 0.35, 0.25, 0.98);
+  transition: transform calc(var(--SLIDING_TIME) * 1ms)
+    cubic-bezier(0.12, 0.8, 0.32, 1);
+}
+.__parent-slider.right > .__main-slider {
+  transform: translateX(-60%);
+}
+.__parent-slider.left > .__main-slider {
+  transform: translateX(60%);
+}
+.__child-slider {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  transition: transform calc(var(--SLIDING_TIME) * 1ms)
+    cubic-bezier(0.94, 0.35, 0.25, 0.98);
+  transition: transform calc(var(--SLIDING_TIME) * 1ms)
+    cubic-bezier(0.12, 0.8, 0.32, 1);
+  background-color: #242526;
+}
+.__child-slider.left {
+  transform: translateX(-100%);
+}
+.__child-slider.right {
+  transform: translateX(100%);
+}
+.__child-slider.show {
+  transform: translateX(0);
+}
