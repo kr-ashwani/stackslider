@@ -11,7 +11,7 @@ const initialState = {
   active: false,
   direction: "",
   ActiveComponentName: null,
-  stackSliding: false,
+  sliderClosing: false,
 };
 const SLIDING_TIME = 500;
 
@@ -31,7 +31,7 @@ const StackSlider = ({ children }) => {
     if (!ActiveComponentName && !direction) {
       setSlideInfo((prev) => ({
         ...prev,
-        stackSliding: true,
+        sliderClosing: true,
       }));
 
       storeTimer.current = setTimeout(() => {
@@ -47,14 +47,14 @@ const StackSlider = ({ children }) => {
         active: true,
         direction,
         ActiveComponentName,
-        stackSliding: false,
+        sliderClosing: false,
       }));
     }
   }
 
   //adding short delay for triggering animation
   useEffect(() => {
-    if (slideInfo.active && !slideInfo.stackSliding)
+    if (slideInfo.active && !slideInfo.sliderClosing)
       setTimeout(() => {
         setShowSlides(true);
       }, 0);
@@ -73,7 +73,7 @@ const StackSlider = ({ children }) => {
     <StackSliderContext.Provider value={values}>
       <div
         className={`${
-          slideInfo.stackSliding ? "" : slideInfo.direction
+          slideInfo.sliderClosing ? "" : slideInfo.direction
         } __parent-slider`}
         style={{ "--SLIDING_TIME": SLIDING_TIME }}
       >
