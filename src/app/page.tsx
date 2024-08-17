@@ -11,8 +11,9 @@ export default function Home() {
 
   return (
     <div className="flex justify-center items-center h-svh  ">
-      <StackSlider width="w-[300px]">
+      <StackSlider stackContainerClass="w-[300px] bg-stackSlide">
         <DemoMain d={d} setD={setD} />
+        123
         {demoSlides.map((elem, index) => (
           <DemoSlides
             key={index}

@@ -22,12 +22,14 @@ function useSlider() {
 
 const StackSlider = ({
   children,
-  width = "w-full",
-  backgroundColor = "bg-stackSlide",
+  mainStackClass = "w-full",
+  childStackClass = "bg-stackSlide",
+  stackContainerClass = "bg-stackSlide",
 }: {
   children: ReactNode;
-  width?: string;
-  backgroundColor?: string;
+  stackContainerClass?: string;
+  mainStackClass?: string;
+  childStackClass?: string;
 }) => {
   const [slideInfo, setSlideInfo] = useState(initialState);
   const storeTimer = useRef<NodeJS.Timeout>();
@@ -91,10 +93,10 @@ const StackSlider = ({
 
   return (
     <StackSliderContext.Provider value={values}>
-      <div className={` ${width} relative overflow-hidden`}>
+      <div className={` ${stackContainerClass} relative overflow-hidden`}>
         <div
           ref={parentSlide}
-          className={` ${backgroundColor} transition relative duration-stack-sliding-time ease-stack-slider-fnc ${
+          className={` ${mainStackClass} transition relative duration-stack-sliding-time ease-stack-slider-fnc ${
             showSlides ? "translate-x-[-60%]" : "translate-x-0"
           }`}
         >
@@ -103,7 +105,7 @@ const StackSlider = ({
         {slideInfo.active && slides.current[slideInfo.ActiveComponentName] ? (
           <div
             ref={childSlide}
-            className={`${backgroundColor}  absolute inset-0 transition duration-stack-sliding-time ease-stack-slider-fnc ${
+            className={`${childStackClass}  absolute inset-0 transition duration-stack-sliding-time ease-stack-slider-fnc ${
               showSlides ? "translate-x-0" : "translate-x-full"
             }`}
           >
