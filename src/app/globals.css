@@ -17,12 +17,9 @@
 }
 
 body {
+  overflow: hidden;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
     rgb(var(--background-start-rgb));
 }
 
@@ -30,4 +27,36 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.mainStack {
+  width: 300px;
+  background-color: #242526;
+  padding: 20px;
+  border-radius: 5px;
+}
+.mainStack > h1 {
+  margin-bottom: 10px;
+}
+.profileList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+.profileList > li {
+  display: flex;
+  padding: 12px 0;
+  padding-right: 10px;
+  padding-left: 20px;
+  border-radius: 5px;
+  transition: background-color 100ms ease-in-out;
+}
+.profileList > li > p {
+  flex-grow: 1;
+}
+.profileList > li:hover {
+  background-color: #3a3b3c;
+}
+.profileList:hover {
+  cursor: pointer;
 }
