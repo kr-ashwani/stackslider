@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import DemoSlides from "./DemoSlides";
-import { useSlider } from "../StackSlider/StatckSlider";
 import ChildMainSlide from "./ChildMainSlide";
+import useSlide from "../StackSlider/utils/useSlide";
 
 const demoSlides = [{ name: "a" }, { name: "b" }];
 
@@ -16,7 +16,7 @@ const CustomSlides = ({
   d: number;
   setD: Dispatch<SetStateAction<number>>;
 }) => {
-  const { trigerSlider } = useSlider();
+  const { trigerSlider } = useSlide();
 
   return (
     <>

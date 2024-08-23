@@ -7,13 +7,9 @@ import { cn } from "./utils/utils";
 const SLIDING_TIME = 300;
 const SLIDER_FNC = "cubic-bezier(0.12, 0.8, 0.32, 1)";
 
-const StackSliderContext = React.createContext({
+export const StackSliderContext = React.createContext({
   trigerSlider: (state: "open" | "close", sliderName: string): void => {},
 });
-
-function useSlider() {
-  return useContext(StackSliderContext);
-}
 
 const StackSlider = ({
   children,
@@ -85,4 +81,4 @@ const StackSlider = ({
   );
 };
 
-export { StackSlider, useSlider };
+export { StackSlider };

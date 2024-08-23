@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { RightClickSvg } from "./Chevron";
-import { useSlider } from "../StackSlider/StatckSlider";
+import useSlide from "../StackSlider/utils/useSlide";
 
 const ChildMainSlide = ({
   str,
@@ -11,7 +11,7 @@ const ChildMainSlide = ({
   d: number;
   setD: Dispatch<SetStateAction<number>>;
 }) => {
-  const { trigerSlider } = useSlider();
+  const { trigerSlider } = useSlide();
 
   return (
     <div>

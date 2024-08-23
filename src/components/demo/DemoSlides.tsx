@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { useSlider } from "../StackSlider/StatckSlider";
 import CustomSlides from "./CustomSlides";
+import useSlide from "../StackSlider/utils/useSlide";
 
 const DemoSlides = ({
   name,
@@ -13,7 +13,7 @@ const DemoSlides = ({
   d: number;
   setD: Dispatch<SetStateAction<number>>;
 }) => {
-  const { trigerSlider } = useSlider();
+  const { trigerSlider } = useSlide();
 
   if (name === "e") return <CustomSlides name={name} str={str} d={d} setD={setD} />;
 
@@ -35,3 +35,6 @@ const DemoSlides = ({
 };
 
 export default DemoSlides;
+function useSlider(): { trigerSlider: any } {
+  throw new Error("Function not implemented.");
+}

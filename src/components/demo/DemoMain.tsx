@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { useSlider } from "../StackSlider/StatckSlider";
 import { RightClickSvg } from "./Chevron";
+import useSlide from "../StackSlider/utils/useSlide";
 
 const DemoMain = ({ d, setD }: { d: number; setD: Dispatch<SetStateAction<number>> }) => {
-  const { trigerSlider } = useSlider();
+  const { trigerSlider } = useSlide();
 
   return (
     <div className="mainStack">
@@ -45,3 +45,6 @@ const DemoMain = ({ d, setD }: { d: number; setD: Dispatch<SetStateAction<number
 };
 
 export default DemoMain;
+function useSlider(): { trigerSlider: any } {
+  throw new Error("Function not implemented.");
+}
