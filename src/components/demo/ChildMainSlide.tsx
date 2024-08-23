@@ -17,11 +17,11 @@ const ChildMainSlide = ({
     <div>
       <h1>child Profile</h1>
       <ul className="profileList">
-        <li onClick={() => trigerSlider("a")}>
+        <li onClick={() => trigerSlider("open", "a")}>
           <p>Setting & privacy</p>
           <RightClickSvg />
         </li>
-        <li onClick={() => trigerSlider("b")}>
+        <li onClick={() => trigerSlider("open", "b")}>
           <p>Display & accessibility</p>
           <RightClickSvg />
         </li>

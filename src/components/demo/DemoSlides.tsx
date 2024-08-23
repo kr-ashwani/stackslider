@@ -22,7 +22,7 @@ const DemoSlides = ({
       <div className="h-full">
         <div
           style={{ cursor: "pointer", backgroundColor: "#242526" }}
-          onClick={() => trigerSlider("")}
+          onClick={() => trigerSlider("close", name)}
         >
           BACK
         </div>

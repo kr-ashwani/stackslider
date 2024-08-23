@@ -1,19 +1,14 @@
 import React, { ReactNode, useContext, useEffect, useMemo, useRef, useState } from "react";
 import getChildren from "./getChildren";
 import { sleep } from "./utils/sleep";
-import useLeftSwipeToggle from "./hooks/useLeftSwipeToggle";
+import ChildSlider from "./ChildSlider";
+import { cn } from "./utils/utils";
 
-const initialState = {
-  active: false,
-  ActiveComponentName: "",
-  sliderClosing: false,
-};
 const SLIDING_TIME = 300;
 const SLIDER_FNC = "cubic-bezier(0.12, 0.8, 0.32, 1)";
 
 const StackSliderContext = React.createContext({
-  slideInfo: initialState,
-  trigerSlider: (name: string): void => {},
+  trigerSlider: (state: "open" | "close", sliderName: string): void => {},
 });
 
 function useSlider() {
@@ -31,59 +26,26 @@ const StackSlider = ({
   mainStackClass?: string;
   childStackClass?: string;
 }) => {
-  const [slideInfo, setSlideInfo] = useState(initialState);
-  const storeTimer = useRef<NodeJS.Timeout>();
+  const [activeSlides, setActiveSlides] = useState<string[]>([]);
   const mainStack = useRef<ReactNode[]>([]);
   const parentSlide = useRef<HTMLDivElement>(null);
-  const childSlide = useRef<HTMLDivElement>(null);
   const slides = useRef<{ [p in string]: ReactNode }>({});
-  const [showSlides, setShowSlides] = useState(false);
-
-  useLeftSwipeToggle(childSlide, parentSlide, (state) => {
-    if (state) {
-      setShowSlides(false);
-      trigerSlider(null);
-    }
-  });
 
   useMemo(() => getChildren({ children, slides, mainStack }), [children]);
 
-  function trigerSlider(ActiveComponentName: string | null) {
-    if (!ActiveComponentName) {
-      setSlideInfo((prev) => ({
-        ...prev,
-        sliderClosing: true,
-      }));
-      setShowSlides(false);
-
-      storeTimer.current = setTimeout(() => {
-        setSlideInfo(initialState);
-      }, SLIDING_TIME);
+  async function trigerSlider(state: "open" | "close", sliderName: string) {
+    if (state === "open") {
+      setActiveSlides((state) => {
+        if (state.includes(sliderName)) return state;
+        return [...state, sliderName];
+      });
     } else {
-      clearTimeout(storeTimer.current);
-      const compName = ActiveComponentName;
-      setSlideInfo((prev) => ({
-        ...prev,
-        active: true,
-        ActiveComponentName: compName,
-        sliderClosing: false,
-      }));
+      const slider = document.getElementById(`stackSlider__${sliderName}__`);
+      if (slider) slider.style.transform = "translateX(100%)";
+      await sleep(SLIDING_TIME);
+      setActiveSlides((state) => state.filter((name) => name !== sliderName));
     }
   }
-
-  //adding short delay for triggering animation
-  useEffect(() => {
-    async function delay() {
-      await sleep(100);
-      if (slideInfo.active && !slideInfo.sliderClosing) setShowSlides(true);
-    }
-    delay();
-  }, [slideInfo]);
-
-  const values = {
-    slideInfo,
-    trigerSlider,
-  };
 
   useEffect(() => {
     // add sliding time and fuction to root
@@ -91,34 +53,36 @@ const StackSlider = ({
     document.documentElement.style.setProperty("--stack-slider-fnc", SLIDER_FNC);
   }, []);
 
+  const value = { trigerSlider };
+
+  useEffect(() => {}, [activeSlides]);
+
   return (
-    <StackSliderContext.Provider value={values}>
-      <div className={` ${stackContainerClass} relative overflow-hidden`}>
+    <StackSliderContext.Provider value={value}>
+      <div className={cn(` relative overflow-hidden`, stackContainerClass)}>
         <div
           ref={parentSlide}
-          className={` ${mainStackClass} transition relative duration-stack-sliding-time ease-stack-slider-fnc ${
-            showSlides ? "translate-x-[-60%]" : "translate-x-0"
-          }`}
+          className={cn(
+            ` transition relative duration-stack-sliding-time ease-stack-slider-fnc `,
+            mainStackClass
+          )}
         >
           {mainStack.current.map((elem) => elem)}
         </div>
-        {slideInfo.active && slides.current[slideInfo.ActiveComponentName] ? (
-          <div
-            ref={childSlide}
-            className={`${childStackClass}  absolute inset-0 transition duration-stack-sliding-time ease-stack-slider-fnc ${
-              showSlides ? "translate-x-0" : "translate-x-full"
-            }`}
+
+        {activeSlides.map((slideName) => (
+          <ChildSlider
+            key={slideName}
+            slideName={slideName}
+            childStackClass={childStackClass}
+            trigerSlider={trigerSlider}
           >
-            {slides.current[slideInfo.ActiveComponentName]}
-          </div>
-        ) : null}
+            {slides.current[slideName]}
+          </ChildSlider>
+        ))}
       </div>
     </StackSliderContext.Provider>
   );
-};
-
-const strCompare = (str1: string, str2: string) => {
-  return str1.toLowerCase() === str2.toLowerCase();
 };
 
 export { StackSlider, useSlider };

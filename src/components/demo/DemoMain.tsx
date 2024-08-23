@@ -10,19 +10,19 @@ const DemoMain = ({ d, setD }: { d: number; setD: Dispatch<SetStateAction<number
       <p>{d}</p>
       <h1>Your Profile</h1>
       <ul className="profileList">
-        <li onClick={() => trigerSlider("a")}>
+        <li onClick={() => trigerSlider("open", "a")}>
           <p>Setting & privacy</p>
           <RightClickSvg />
         </li>
-        <li onClick={() => trigerSlider("b")}>
+        <li onClick={() => trigerSlider("open", "b")}>
           <p>Help & support</p>
           <RightClickSvg />
         </li>
-        <li onClick={() => trigerSlider("c")}>
+        <li onClick={() => trigerSlider("open", "c")}>
           <p>Display & accessibility</p>
           <RightClickSvg />
         </li>
-        <li onClick={() => trigerSlider("d")}>
+        <li onClick={() => trigerSlider("open", "d")}>
           <p>Extra</p>
           <RightClickSvg />
         </li>
@@ -35,7 +35,7 @@ const DemoMain = ({ d, setD }: { d: number; setD: Dispatch<SetStateAction<number
         >
           +
         </li>
-        <li onClick={() => trigerSlider("e")}>
+        <li onClick={() => trigerSlider("open", "e")}>
           <p>Custom slides</p>
           <RightClickSvg />
         </li>
